@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
+import NotFound from "../pages/NotFound";
+import "../App.css";
 
 const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
@@ -20,7 +22,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="*" element={<Navigate to="/login" />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
