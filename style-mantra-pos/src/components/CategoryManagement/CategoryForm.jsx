@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { InputTextarea } from "primereact/inputtextarea";
 
 const CategoryForm = ({ category, onSubmit, onCancel }) => {
   const [name, setName] = useState(category ? category.name : "");
@@ -23,48 +20,58 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
   }, [category]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
-        <h2 className="text-xl font-semibold mb-6 text-center text-indigo-600">
-          Category Form
+    <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 className="text-xl font-semibold text-center text-gray-700 mb-4">
+          {category ? "Edit Category" : "Add New Category"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="p-fluid">
-            <label className="block text-gray-700">Category Name</label>
-            <InputText
+          {/* Category Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Category Name
+            </label>
+            <input
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full p-inputtext border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              required
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter category name"
             />
           </div>
-          <div className="p-fluid">
-            <label className="block text-gray-700">Description</label>
-            <InputTextarea
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              rows={4}
-              className="w-full p-textarea border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              rows="3"
+              required
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter category description"
             />
           </div>
-          <div className="flex justify-end space-x-4 mt-4">
-            <Button
+
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-3 mt-4">
+            <button
               type="button"
-              label="Cancel"
-              className="p-button-secondary p-button-text text-red-600"
               onClick={onCancel}
-            />
-            <Button
+              className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 focus:outline-none"
+            >
+              Cancel
+            </button>
+            <button
               type="submit"
-              label="Save"
-              className={`p-button p-button-primary ${
-                isFormValid
-                  ? "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-300 transition-all duration-300 ease-in-out transform hover:scale-105"
-                  : "bg-gray-400 text-gray-700 cursor-not-allowed"
-              } rounded-lg py-2 px-4 shadow-md`}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
               disabled={!isFormValid}
-            />
+            >
+              Save
+            </button>
           </div>
         </form>
       </div>
