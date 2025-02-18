@@ -2,52 +2,47 @@ import PropTypes from "prop-types";
 
 const ProductList = ({ products, onEdit, onDelete }) => {
   return (
-    <div className="flex space-x-6 overflow-x-auto py-4">
-      {products.map((product, index) => (
-        <div
-          key={product.id || index} // Fallback to index if id is not available
-          className="w-64 p-4 bg-gray-50 border border-gray-300 rounded-lg flex flex-col justify-between items-start shadow-sm hover:shadow-lg transition-shadow duration-300"
-        >
-          {/* Product Info */}
-          <div className="flex-1">
-            {/* Product Name with Bold and Colorful */}
-            <h3 className="text-lg font-bold text-black-600">
-              {product.item_name}
-            </h3>
-
-            {/* Description */}
-            <p className="text-sm text-gray-700 mt-1">{product.description}</p>
-
-            {/* Design No and Category - Highlighted */}
-            <div className="text-white bg-green-500 rounded-md mt-2 px-2 py-1">
-              <p>
-                Design No:{" "}
-                <span className="font-semibold">{product.design_no}</span>
-              </p>
-              <p>
-                Category:{" "}
-                <span className="font-semibold">{product.category_name}</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex space-x-3 mt-3">
-            <button
-              onClick={() => onEdit(product)}
-              className="text-blue-600 border-2 border-blue-600 rounded-full px-4 py-2 hover:bg-blue-100 transition-all duration-200"
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse shadow-md rounded-lg overflow-hidden">
+        <thead className="bg-gray-800 text-white">
+          <tr>
+            <th className="px-4 py-2 text-left">Item Name</th>
+            <th className="px-4 py-2 text-left">Description</th>
+            <th className="px-4 py-2 text-left">Design No</th>
+            <th className="px-4 py-2 text-left">Category</th>
+            <th className="px-4 py-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product, index) => (
+            <tr
+              key={product.id || index}
+              className={`border-b ${
+                index % 2 === 0 ? "bg-gray-100" : "bg-white"
+              } hover:bg-gray-200 transition`}
             >
-              Edit
-            </button>
-            <button
-              onClick={() => onDelete(product.id)}
-              className="text-red-600 border-2 border-red-600 rounded-full px-4 py-2 hover:bg-red-100 transition-all duration-200"
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      ))}
+              <td className="px-4 py-3">{product.item_name}</td>
+              <td className="px-4 py-3">{product.description}</td>
+              <td className="px-4 py-3">{product.design_no}</td>
+              <td className="px-4 py-3">{product.category_name}</td>
+              <td className="px-4 py-3 flex justify-center space-x-2">
+                <button
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md transition"
+                  onClick={() => onEdit(product)}
+                >
+                  ✏️ Edit
+                </button>
+                <button
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md transition"
+                  onClick={() => onDelete(product.id)}
+                >
+                  🗑️ Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
