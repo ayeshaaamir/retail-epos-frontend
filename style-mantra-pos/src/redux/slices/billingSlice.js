@@ -9,6 +9,7 @@ import {
   SET_PRODUCTS,
   SET_VARIANTS,
   ADD_NEW_CART_ITEM,
+  UPDATE_PAYMENT_SUMMARY, // 👈 Import the new action type
 } from "../actions/billingActions";
 
 const initialState = {
@@ -21,6 +22,12 @@ const initialState = {
   categories: [],
   products: [],
   variants: [],
+  paymentSummary: {
+    // 👈 Add paymentSummary to the initial state
+    actualBill: 0,
+    totalDiscount: 0,
+    discountedBill: 0,
+  },
 };
 
 const billingReducer = (state = initialState, action) => {
@@ -52,6 +59,7 @@ const billingReducer = (state = initialState, action) => {
         ...state,
         cart: state.cart.filter((item) => item.cartItemId !== action.payload),
       };
+
     case ADD_NEW_CART_ITEM: {
       return {
         ...state,
@@ -98,6 +106,16 @@ const billingReducer = (state = initialState, action) => {
       return {
         ...state,
         variants: action.payload,
+      };
+
+    case UPDATE_PAYMENT_SUMMARY:
+      return {
+        ...state,
+        paymentSummary: {
+          actualBill: action.payload.actualBill,
+          totalDiscount: action.payload.totalDiscount,
+          discountedBill: action.payload.discountedBill,
+        },
       };
 
     default:

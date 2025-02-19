@@ -2,15 +2,27 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateCartItem,
   removeFromCart,
+  updatePaymentSummary,
 } from "../../redux/actions/billingActions";
+import { useEffect } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.billing);
 
+  // Calculate total discount, total price, and total items
+  const totalItems = cart.length;
+  const totalDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
+  const discountedBill = cart.reduce((sum, item) => sum + item.price, 0);
+  const actualBill = cart.reduce((sum, item) => sum + item.total, 0);
+
+  useEffect(() => {
+    dispatch(updatePaymentSummary(actualBill, totalDiscount, discountedBill));
+  }, [cart, dispatch, actualBill, totalDiscount, discountedBill]);
+
   const handlePriceChange = (rowData, newPrice) => {
     // Ensure the new price is not greater than the current price
-    if (newPrice > rowData.price) {
+    if (newPrice > rowData.total) {
       alert("Price cannot be increased. It can only be decreased.");
       return;
     }
@@ -57,7 +69,7 @@ const Cart = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-semibold text-gray-900">Cart Items</h2>
         <span className="bg-blue-600 text-white text-sm py-2 px-4 rounded-full">
-          {cart.length} items
+          {totalItems} items
         </span>
       </div>
 
@@ -114,9 +126,26 @@ const Cart = () => {
         </table>
       </div>
 
-      <div className="flex justify-between font-bold text-lg mt-4">
-        <span>Total Items:</span>
-        <span>{cart.length}</span>
+      {/* Totals Section */}
+      <div className="flex flex-col space-y-4 font-bold text-lg mt-4">
+        <div className="flex justify-between">
+          <span>Total Items:</span>
+          <span>{totalItems}</span>
+        </div>
+        <hr />
+        <div className="flex justify-between">
+          <span>Actual Bill:</span>
+          <span>£{actualBill.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Total Discount:</span>
+          <span>£{totalDiscount.toFixed(2)}</span>
+        </div>
+        <hr />
+        <div className="flex justify-between">
+          <span>Dicounted Bill:</span>
+          <span>£{discountedBill.toFixed(2)}</span>
+        </div>
       </div>
     </div>
   );

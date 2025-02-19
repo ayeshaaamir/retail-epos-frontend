@@ -11,6 +11,7 @@ export const SET_PAYMENT_METHOD = "SET_PAYMENT_METHOD";
 export const SET_CATEGORIES = "SET_CATEGORIES";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_VARIANTS = "SET_VARIANTS";
+export const UPDATE_PAYMENT_SUMMARY = "UPDATE_PAYMENT_SUMMARY";
 
 export const fetchCategories = () => async (dispatch) => {
   try {
@@ -81,3 +82,12 @@ export const processSale = (saleData) => async (dispatch) => {
     throw error;
   }
 };
+
+export const updatePaymentSummary = (
+  actualBill,
+  totalDiscount,
+  discountedBill
+) => ({
+  type: "UPDATE_PAYMENT_SUMMARY",
+  payload: { actualBill, totalDiscount, discountedBill },
+});

@@ -4,7 +4,6 @@ import categoryReducer from './slices/categorySlice';
 import productReducer from './slices/productSlice';
 import inventoryReducer from './slices/inventorySlice';
 import billingReducer from './slices/billingSlice';
-import paymentSummaryReducer from "./slices/paymentSummarySlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +12,5 @@ export const store = configureStore({
     products: productReducer,
     inventory: inventoryReducer,
     billing: billingReducer,
-    paymentSummary: paymentSummaryReducer,
   },
 });

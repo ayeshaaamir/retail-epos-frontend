@@ -1,8 +1,8 @@
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import BarcodeInput from "../components/BillingManagement/BarcodeInput";
 import Cart from "../components/BillingManagement/Cart";
 import PaymentSummary from "../components/BillingManagement/PaymentSummary";
-import { store } from '../redux/store';
+import { store } from "../redux/store";
 
 const BillingManagement = () => {
   return (
