@@ -17,21 +17,21 @@ const Receipt = ({ saleData }) => {
   }, []);
 
   return (
-    <div className="p-4">
-      <div className="printable-receipt bg-white p-2 rounded-lg shadow-none">
+    <div className="flex justify-center p-4">
+      <div className="printable-receipt bg-white p-2 w-80 mx-auto">
         <div className="text-center mb-2">
-          <h2 className="text-2xl font-bold">Style Mantra</h2>
-          <p className="text-sm text-black-600">141-143 Ilford Lane</p>
-          <p className="text-sm text-black-600">Tel Number: 0208-911-8010</p>
+          <h2 className="text-xl font-bold">Style Mantra</h2>
+          <p className="text-xs text-black-600">141-143 Ilford Lane</p>
+          <p className="text-xs text-black-600">Tel: 0208-911-8010</p>
         </div>
 
-        <div className="mb-3 text-sm">
+        <div className="mb-3 text-xs">
           <div className="flex justify-between">
             <span>Date:</span>
             <span>{new Date().toLocaleString()}</span>
           </div>
           <div className="flex justify-between mb-1">
-            <span>Payment Method:</span>
+            <span>Payment:</span>
             <span className="font-medium">{saleData.paymentType}</span>
           </div>
           <div className="flex justify-between mb-1">
@@ -40,24 +40,24 @@ const Receipt = ({ saleData }) => {
           </div>
         </div>
 
-        <table className="w-full mb-3 text-sm">
+        <table className="w-full mb-3 text-xs table-fixed">
           <thead>
             <tr className="border-b">
-              <th className="text-left py-1">Item</th>
-              <th className="text-left py-1">Size</th>
-              <th className="text-right py-1">Quantity</th>
-              <th className="text-right py-1">Price</th>
-              <th className="text-right py-1">Discount</th>
-              <th className="text-right py-1 truncate">Actual Price</th>
+              <th className="text-left py-1 w-20">Item</th>
+              <th className="text-left py-1 w-8">Size</th>
+              <th className="text-right py-1 w-8">Qty</th>
+              <th className="text-right py-1 w-12">Price</th>
+              <th className="text-right py-1 w-12">Disc</th>
+              <th className="text-right py-1 w-12">Total</th>
             </tr>
           </thead>
           <tbody>
             {saleData.cart.map((item) => (
               <tr key={item.barcode} className="border-b">
                 <td className="py-1 truncate">{item.item}</td>
-                <td className="py-1">{item.size || "-"}</td>
+                <td className="py-1 truncate">{item.size || "-"}</td>
                 <td className="text-right py-1">{item.quantity}</td>
-                <td className="text-right py-1 truncate">£{item.price.toFixed(2)}</td>
+                <td className="text-right py-1">£{item.price.toFixed(2)}</td>
                 <td className="text-right py-1">
                   £{item.item_discount.toFixed(2)}
                 </td>
@@ -67,14 +67,14 @@ const Receipt = ({ saleData }) => {
           </tbody>
         </table>
 
-        <div className="payment-summary mb-3">
-          <h3 className="text-lg font-bold mb-2">Payment Summary</h3>
+        <div className="payment-summary mb-3 text-xs">
+          <h3 className="text-sm font-bold mb-2">Payment Summary</h3>
           <div className="flex justify-between mb-1">
             <span>Total Amount:</span>
             <span>£{saleData.actualBill.toFixed(2)}</span>
           </div>
           <div className="flex justify-between mb-1">
-            <span>Item-Level Discount:</span>
+            <span>Item Discount:</span>
             <span>£{saleData.itemDiscount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between mb-1">
@@ -82,7 +82,7 @@ const Receipt = ({ saleData }) => {
             <span>£{saleData.discountedBill.toFixed(2)}</span>
           </div>
           <div className="flex justify-between mb-1">
-            <span>Total Discount Applied:</span>
+            <span>Total Discount:</span>
             <span>£{saleData.overallDiscount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-bold border-t pt-1">
@@ -92,16 +92,17 @@ const Receipt = ({ saleData }) => {
         </div>
 
         <div className="thank-you text-center mt-2">
-          <p className="text-sm text-black-600">Thank you for your purchase!</p>
+          <p className="text-xs text-black-600">Thank you for your purchase!</p>
           <div className="flex justify-center mt-2">
             <Barcode
               value={saleData.barcode}
-              width={2}
-              height={80}
-              fontSize={14}
+              width={1}
+              height={60}
+              fontSize={13}
+              margin={0}
             />
           </div>
-          <div>
+          <div className="text-xs mt-2">
             <p>
               Terms and conditions: You agree to the following terms and
               conditions displayed in store which includes:
@@ -137,12 +138,15 @@ const Receipt = ({ saleData }) => {
 
           @page {
             margin: 0;
+            size: 80mm auto;
           }
 
           body, html {
             margin: 0;
             padding: 0;
             visibility: hidden;
+            height: 100%;
+            width: 80mm;
           }
 
           .printable-receipt {
@@ -150,25 +154,30 @@ const Receipt = ({ saleData }) => {
             position: fixed;
             top: 0;
             left: 0;
-            width: 110mm;
-            padding: 0;
-            font-size: 16px;
+            width: 80mm;
+            padding: 8px;
+            font-size: 12px;
+            color: black;
+            background: white;
+            box-shadow: none;
           }
 
-          .printable-receipt h2 {
-            font-size: 20px;
+          .printable-receipt * {
+            visibility: visible;
           }
 
-          .printable-receipt table {
-            font-size: 16px;
-          }
-
-          // .printable-receipt * {
-          //   visibility: visible;
-          // }
-
-          .no-print {
+          .no-print, 
+          .no-print * {
             display: none !important;
+          }
+
+          table {
+            width: 100% !important;
+            table-layout: fixed;
+          }
+
+          td, th {
+            padding: 2px !important;
           }
         }
       `}</style>
