@@ -15,7 +15,7 @@ import {
 } from "../actions/billingActions";
 
 const initialState = {
-  cart: [],
+  cart: [], // Ensure cart is defined here
   discount: 0,
   subtotal: 0,
   total: 0,
@@ -25,12 +25,11 @@ const initialState = {
   products: [],
   variants: [],
   paymentSummary: {
-    // 👈 Add paymentSummary to the initial state
     actualBill: 0,
     itemDiscount: 0,
     discountedBill: 0,
-    overallDiscount: 0, // New field
-    customerBillPrice: 0, // New field
+    overallDiscount: 0,
+    customerBillPrice: 0,
   },
 };
 
@@ -81,11 +80,19 @@ const billingReducer = (state = initialState, action) => {
     case PROCESS_SALE:
       return {
         ...state,
-        receipt: action.payload,
-        cart: [],
-        discount: 0,
-        subtotal: 0,
-        total: 0,
+        receipt: action.payload, // Store the sale receipt
+        cart: [], // Clear the cart
+        discount: 0, // Reset discount
+        subtotal: 0, // Reset subtotal
+        total: 0, // Reset total
+        paymentSummary: {
+          ...state.paymentSummary,
+          actualBill: 0,
+          itemDiscount: 0,
+          discountedBill: 0,
+          overallDiscount: 0,
+          customerBillPrice: 0,
+        },
       };
 
     case SET_PAYMENT_METHOD:
