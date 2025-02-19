@@ -21,7 +21,7 @@ const InventoryList = ({ inventory, onEdit, onDelete, onPrintBarcode }) => {
         <tbody>
           {inventory.map((item, index) => (
             <tr
-              key={item.sku}
+              key={item.index}
               className={`border-b ${
                 index % 2 === 0 ? "bg-gray-100" : "bg-white"
               } hover:bg-gray-200 transition`}

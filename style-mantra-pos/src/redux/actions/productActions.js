@@ -49,7 +49,7 @@ export const updateProduct = (productData) => async (dispatch) => {
     const { id, ...rest } = productData;
     const response = await axios.put(`${API_BASE_URL}/product/${id}`, rest);
     dispatch({ type: UPDATE_PRODUCT, payload: response.data });
-    return response.data; // Return response to trigger refetch in the component
+    return response.data;
   } catch (error) {
     console.error("Error updating product:", error);
   }

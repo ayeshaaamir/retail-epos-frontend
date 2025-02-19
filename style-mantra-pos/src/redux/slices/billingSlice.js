@@ -15,7 +15,7 @@ import {
 } from "../actions/billingActions";
 
 const initialState = {
-  cart: [], // Ensure cart is defined here
+  cart: [],
   discount: 0,
   subtotal: 0,
   total: 0,
@@ -36,10 +36,10 @@ const initialState = {
 const billingReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART: {
-      const cartItemId = Date.now(); // Generate a unique ID
+      const cartItemId = Date.now();
       const newCartItem = {
         ...action.payload,
-        cartItemId, // Add the unique identifier
+        cartItemId,
       };
       return {
         ...state,
@@ -80,11 +80,11 @@ const billingReducer = (state = initialState, action) => {
     case PROCESS_SALE:
       return {
         ...state,
-        receipt: action.payload, // Store the sale receipt
-        cart: [], // Clear the cart
-        discount: 0, // Reset discount
-        subtotal: 0, // Reset subtotal
-        total: 0, // Reset total
+        receipt: action.payload,
+        cart: [],
+        discount: 0,
+        subtotal: 0,
+        total: 0,
         paymentSummary: {
           ...state.paymentSummary,
           actualBill: 0,
@@ -128,8 +128,8 @@ const billingReducer = (state = initialState, action) => {
           itemDiscount: action.payload.itemDiscount,
           discountedBill: action.payload.discountedBill,
           overallDiscount:
-            action.payload.actualBill - action.payload.discountedBill, // Calculate overallDiscount
-          customerBillPrice: action.payload.discountedBill, // Initialize customerBillPrice with discountedBill
+            action.payload.actualBill - action.payload.discountedBill,
+          customerBillPrice: action.payload.discountedBill,
         },
       };
 
@@ -137,7 +137,6 @@ const billingReducer = (state = initialState, action) => {
       const newDiscountedBill = action.payload;
       const actualBill = state.paymentSummary.actualBill;
 
-      // Calculate overallDiscount
       const overallDiscount = actualBill - newDiscountedBill;
 
       return {
@@ -146,7 +145,7 @@ const billingReducer = (state = initialState, action) => {
           ...state.paymentSummary,
           discountedBill: newDiscountedBill,
           overallDiscount,
-          customerBillPrice: newDiscountedBill, // Customer Bill Price is equal to Discounted Bill
+          customerBillPrice: newDiscountedBill,
         },
       };
     }

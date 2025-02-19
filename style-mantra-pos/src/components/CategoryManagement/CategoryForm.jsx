@@ -26,7 +26,6 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
           {category ? "Edit Category" : "Add New Category"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Category Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Category Name
@@ -41,7 +40,6 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Description
@@ -56,7 +54,6 @@ const CategoryForm = ({ category, onSubmit, onCancel }) => {
             />
           </div>
 
-          {/* Action Buttons */}
           <div className="flex justify-end space-x-3 mt-4">
             <button
               type="button"

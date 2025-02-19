@@ -10,7 +10,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.billing);
 
-  // Calculate total discount, total price, and total items
   const totalItems = cart.length;
   const itemDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
   const discountedBill = cart.reduce((sum, item) => sum + item.price, 0);
@@ -21,22 +20,16 @@ const Cart = () => {
   }, [cart, dispatch, actualBill, itemDiscount, discountedBill]);
 
   const handlePriceChange = (rowData, newPrice) => {
-    // Ensure the new price is not greater than the current price
     if (newPrice > rowData.total) {
       alert("Price cannot be increased. It can only be decreased.");
       return;
     }
-
-    // Calculate discount
     const discount = rowData.total - newPrice;
-
-    // Ensure discount does not go negative
     if (discount < 0) {
       alert("Discount cannot be negative.");
       return;
     }
 
-    // Dispatch the update action
     dispatch(
       updateCartItem(rowData.cartItemId, {
         price: newPrice,
@@ -47,21 +40,6 @@ const Cart = () => {
 
   const handleRemoveItem = (rowData) => {
     dispatch(removeFromCart(rowData.cartItemId));
-  };
-
-  const handleAddItem = (product) => {
-    // Generate a unique ID for the new cart item
-    const cartItemId = Date.now(); // Use a timestamp or UUID for uniqueness
-    const newCartItem = {
-      ...product,
-      cartItemId, // Add the unique identifier
-    };
-
-    // Dispatch the action to add the new item
-    dispatch({
-      type: "ADD_NEW_CART_ITEM",
-      payload: newCartItem,
-    });
   };
 
   return (
@@ -126,7 +104,6 @@ const Cart = () => {
         </table>
       </div>
 
-      {/* Totals Section */}
       <div className="flex flex-col space-y-4 font-bold text-lg mt-4">
         <div className="flex justify-between">
           <span>Total Items:</span>

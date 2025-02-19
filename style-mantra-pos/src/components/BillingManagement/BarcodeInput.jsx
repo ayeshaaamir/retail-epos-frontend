@@ -37,7 +37,7 @@ const BarcodeInput = () => {
 
       setBarcode("");
     } catch (error) {
-      alert("Failed to fetch item details");
+      alert(error);
     }
   };
 
