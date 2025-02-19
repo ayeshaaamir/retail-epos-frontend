@@ -29,7 +29,7 @@ const PaymentSummary = () => {
 
   const handleProcessSale = () => {
     if (!cart || cart.length === 0) {
-      alert("Cart is empty. Cannot process sale.");
+      alert("Your cart is empty. Please add items before processing the sale.");
       return;
     }
 
@@ -37,13 +37,15 @@ const PaymentSummary = () => {
     const saleData = {
       cart: cart.map((item) => ({
         barcode: item.barcode,
-        quantity: item.quantity || 1,
-        item_discount: item.item_discount,
+        quantity: item.quantity || 1, // Default to 1 if quantity is missing
+        item_discount: item.item_discount || 0, // Default to 0 if item_discount is missing
       })),
       paymentType: paymentMethod,
       discount: overallDiscount,
       paidAmount: customerBillPrice,
     };
+
+    console.log("Sale Data Payload:", saleData); // Log the payload for debugging
 
     // Dispatch the processSale action
     dispatch(processSale(saleData))
@@ -61,16 +63,21 @@ const PaymentSummary = () => {
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Payment Summary</h2>
       <div className="space-y-3">
+        {/* Total Amount Before Discount */}
         <div className="flex justify-between">
-          <span>Actual Bill:</span>
+          <span>Total Amount:</span>
           <span>£{actualBill.toFixed(2)}</span>
         </div>
+
+        {/* Discount Applied to Individual Items */}
         <div className="flex justify-between">
-          <span>Item Discount:</span>
+          <span>Item-Level Discount:</span>
           <span>£{itemDiscount.toFixed(2)}</span>
         </div>
+
+        {/* Editable Discounted Bill */}
         <div className="flex justify-between">
-          <span>Discounted Bill:</span>
+          <span>Discounted Total:</span>
           <input
             type="number"
             value={discountedBill}
@@ -78,19 +85,24 @@ const PaymentSummary = () => {
             className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
+        {/* Overall Discount (Item Discount + Additional Discount) */}
         <div className="flex justify-between">
-          <span>Overall Discount:</span>
+          <span>Total Discount Applied:</span>
           <span>£{overallDiscount.toFixed(2)}</span>
         </div>
+
         <hr className="my-2" />
+
+        {/* Final Amount to be Paid by Customer */}
         <div className="flex justify-between font-bold">
-          <span>Customer Bill Price:</span>
+          <span>Amount to Pay:</span>
           <span>£{customerBillPrice.toFixed(2)}</span>
         </div>
 
         {/* Payment Method Dropdown */}
         <div className="flex justify-between items-center">
-          <span>Payment Method:</span>
+          <span>Select Payment Method:</span>
           <select
             value={paymentMethod}
             onChange={(e) => setPaymentMethod(e.target.value)}
@@ -106,7 +118,7 @@ const PaymentSummary = () => {
           onClick={handleProcessSale}
           className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
         >
-          Process Sale
+          Complete Purchase
         </button>
       </div>
     </div>
