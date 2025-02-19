@@ -9,6 +9,11 @@ const Receipt = ({ saleData }) => {
 
   useEffect(() => {
     handlePrint();
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   return (
@@ -43,16 +48,16 @@ const Receipt = ({ saleData }) => {
               <th className="text-right py-1">Quantity</th>
               <th className="text-right py-1">Price</th>
               <th className="text-right py-1">Discount</th>
-              <th className="text-right py-1">Actual Price</th>
+              <th className="text-right py-1 truncate">Actual Price</th>
             </tr>
           </thead>
           <tbody>
             {saleData.cart.map((item) => (
               <tr key={item.barcode} className="border-b">
-                <td className="py-1">{item.item}</td>
+                <td className="py-1 truncate">{item.item}</td>
                 <td className="py-1">{item.size || "-"}</td>
                 <td className="text-right py-1">{item.quantity}</td>
-                <td className="text-right py-1">£{item.price.toFixed(2)}</td>
+                <td className="text-right py-1 truncate">£{item.price.toFixed(2)}</td>
                 <td className="text-right py-1">
                   £{item.item_discount.toFixed(2)}
                 </td>
@@ -62,7 +67,7 @@ const Receipt = ({ saleData }) => {
           </tbody>
         </table>
 
-        <div className="payment-summary text-sm mb-3">
+        <div className="payment-summary mb-3">
           <h3 className="text-lg font-bold mb-2">Payment Summary</h3>
           <div className="flex justify-between mb-1">
             <span>Total Amount:</span>
@@ -131,28 +136,36 @@ const Receipt = ({ saleData }) => {
           }   
 
           @page {
-            margin: 0; /* Remove default page margins */
+            margin: 0;
           }
 
           body, html {
             margin: 0;
             padding: 0;
-            visibility: hidden; /* Hide everything by default */
+            visibility: hidden;
           }
 
           .printable-receipt {
-            visibility: visible; /* Show only the receipt */
+            visibility: visible;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100mm; /* Adjust width for receipt paper */
+            width: 110mm;
             padding: 0;
-            font-size: 14px; /* Smaller font for better fit */
+            font-size: 16px;
           }
 
-          .printable-receipt * {
-            visibility: visible;
+          .printable-receipt h2 {
+            font-size: 20px;
           }
+
+          .printable-receipt table {
+            font-size: 16px;
+          }
+
+          // .printable-receipt * {
+          //   visibility: visible;
+          // }
 
           .no-print {
             display: none !important;
