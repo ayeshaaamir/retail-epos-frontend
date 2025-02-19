@@ -12,13 +12,13 @@ const Cart = () => {
 
   // Calculate total discount, total price, and total items
   const totalItems = cart.length;
-  const totalDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
+  const itemDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
   const discountedBill = cart.reduce((sum, item) => sum + item.price, 0);
   const actualBill = cart.reduce((sum, item) => sum + item.total, 0);
-
+  
   useEffect(() => {
-    dispatch(updatePaymentSummary(actualBill, totalDiscount, discountedBill));
-  }, [cart, dispatch, actualBill, totalDiscount, discountedBill]);
+    dispatch(updatePaymentSummary(actualBill, itemDiscount, discountedBill));
+  }, [cart, dispatch, actualBill, itemDiscount, discountedBill]);
 
   const handlePriceChange = (rowData, newPrice) => {
     // Ensure the new price is not greater than the current price
@@ -139,7 +139,7 @@ const Cart = () => {
         </div>
         <div className="flex justify-between">
           <span>Total Discount:</span>
-          <span>£{totalDiscount.toFixed(2)}</span>
+          <span>£{itemDiscount.toFixed(2)}</span>
         </div>
         <hr />
         <div className="flex justify-between">

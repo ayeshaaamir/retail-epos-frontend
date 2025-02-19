@@ -1,10 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateDiscountedBill } from "../../redux/actions/billingActions";
 
 const PaymentSummary = () => {
-  const { actualBill, totalDiscount, discountedBill } = useSelector(
-    (state) => state.billing.paymentSummary
-  );
+  const dispatch = useDispatch();
+  const {
+    actualBill,
+    itemDiscount,
+    discountedBill,
+    overallDiscount,
+    customerBillPrice,
+  } = useSelector((state) => state.billing.paymentSummary);
+
+  const handleDiscountedBillChange = (e) => {
+    const newDiscountedBill = parseFloat(e.target.value);
+    if (!isNaN(newDiscountedBill)) {
+      dispatch(updateDiscountedBill(newDiscountedBill));
+    }
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -15,13 +28,26 @@ const PaymentSummary = () => {
           <span>£{actualBill.toFixed(2)}</span>
         </div>
         <div className="flex justify-between">
-          <span>Total Discount:</span>
-          <span>£{totalDiscount.toFixed(2)}</span>
+          <span>Item Discount:</span>
+          <span>£{itemDiscount.toFixed(2)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span>Discounted Bill:</span>
+          <input
+            type="number"
+            value={discountedBill}
+            onChange={handleDiscountedBillChange}
+            className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="flex justify-between">
+          <span>Overall Discount:</span>
+          <span>£{overallDiscount.toFixed(2)}</span>
         </div>
         <hr className="my-2" />
         <div className="flex justify-between font-bold">
-          <span>Discounted Bill:</span>
-          <span>£{discountedBill.toFixed(2)}</span>
+          <span>Customer Bill Price:</span>
+          <span>£{customerBillPrice.toFixed(2)}</span>
         </div>
       </div>
     </div>

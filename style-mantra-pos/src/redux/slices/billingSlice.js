@@ -9,7 +9,9 @@ import {
   SET_PRODUCTS,
   SET_VARIANTS,
   ADD_NEW_CART_ITEM,
-  UPDATE_PAYMENT_SUMMARY, // 👈 Import the new action type
+  UPDATE_PAYMENT_SUMMARY,
+  UPDATE_OVERALL_DISCOUNT,
+  UPDATE_DISCOUNTED_BILL,
 } from "../actions/billingActions";
 
 const initialState = {
@@ -25,8 +27,10 @@ const initialState = {
   paymentSummary: {
     // 👈 Add paymentSummary to the initial state
     actualBill: 0,
-    totalDiscount: 0,
+    itemDiscount: 0,
     discountedBill: 0,
+    overallDiscount: 0, // New field
+    customerBillPrice: 0, // New field
   },
 };
 
@@ -112,11 +116,48 @@ const billingReducer = (state = initialState, action) => {
       return {
         ...state,
         paymentSummary: {
+          ...state.paymentSummary,
           actualBill: action.payload.actualBill,
-          totalDiscount: action.payload.totalDiscount,
+          itemDiscount: action.payload.itemDiscount,
           discountedBill: action.payload.discountedBill,
+          overallDiscount:
+            action.payload.actualBill - action.payload.discountedBill, // Calculate overallDiscount
+          customerBillPrice: action.payload.discountedBill, // Initialize customerBillPrice with discountedBill
         },
       };
+
+    case UPDATE_DISCOUNTED_BILL: {
+      const newDiscountedBill = action.payload;
+      const actualBill = state.paymentSummary.actualBill;
+
+      // Calculate overallDiscount
+      const overallDiscount = actualBill - newDiscountedBill;
+
+      return {
+        ...state,
+        paymentSummary: {
+          ...state.paymentSummary,
+          discountedBill: newDiscountedBill,
+          overallDiscount,
+          customerBillPrice: newDiscountedBill, // Customer Bill Price is equal to Discounted Bill
+        },
+      };
+    }
+
+    case UPDATE_OVERALL_DISCOUNT: {
+      const newOverallDiscount = action.payload;
+      const discountedBill = state.paymentSummary.discountedBill;
+      const customerBillPrice = discountedBill - newOverallDiscount;
+
+      return {
+        ...state,
+        paymentSummary: {
+          ...state.paymentSummary,
+          overallDiscount: newOverallDiscount,
+          customerBillPrice,
+        },
+      };
+    }
 
     default:
       return state;

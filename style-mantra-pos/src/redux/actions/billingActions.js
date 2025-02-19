@@ -12,6 +12,8 @@ export const SET_CATEGORIES = "SET_CATEGORIES";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 export const SET_VARIANTS = "SET_VARIANTS";
 export const UPDATE_PAYMENT_SUMMARY = "UPDATE_PAYMENT_SUMMARY";
+export const UPDATE_DISCOUNTED_BILL = "UPDATE_DISCOUNTED_BILL";
+export const UPDATE_OVERALL_DISCOUNT = "UPDATE_OVERALL_DISCOUNT";
 
 export const fetchCategories = () => async (dispatch) => {
   try {
@@ -85,9 +87,19 @@ export const processSale = (saleData) => async (dispatch) => {
 
 export const updatePaymentSummary = (
   actualBill,
-  totalDiscount,
+  itemDiscount,
   discountedBill
 ) => ({
-  type: "UPDATE_PAYMENT_SUMMARY",
-  payload: { actualBill, totalDiscount, discountedBill },
+  type: UPDATE_PAYMENT_SUMMARY,
+  payload: { actualBill, itemDiscount, discountedBill },
+});
+
+export const updateDiscountedBill = (discountedBill) => ({
+  type: UPDATE_DISCOUNTED_BILL,
+  payload: discountedBill,
+});
+
+export const updateOverallDiscount = (overallDiscount) => ({
+  type: UPDATE_OVERALL_DISCOUNT,
+  payload: overallDiscount,
 });
