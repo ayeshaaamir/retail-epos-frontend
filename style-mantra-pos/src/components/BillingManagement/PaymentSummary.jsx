@@ -89,7 +89,7 @@ const PaymentSummary = () => {
               <span>£{actualBill.toFixed(2)}</span>
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between text-red-500 font-bold">
               <span>Item-Level Discount:</span>
               <span>£{itemDiscount.toFixed(2)}</span>
             </div>
@@ -104,7 +104,7 @@ const PaymentSummary = () => {
               />
             </div>
 
-            <div className="flex justify-between">
+            <div className="flex justify-between text-green-500 font-bold">
               <span>Total Discount Applied:</span>
               <span>£{overallDiscount.toFixed(2)}</span>
             </div>
