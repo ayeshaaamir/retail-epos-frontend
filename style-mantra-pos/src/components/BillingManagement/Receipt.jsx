@@ -20,9 +20,10 @@ const Receipt = ({ saleData }) => {
     <div className="flex justify-center p-4">
       <div className="printable-receipt bg-white p-2 w-80 mx-auto">
         <div className="text-center mb-2">
-          <h2 className="text-xl font-bold">Style Mantra</h2>
-          <p className="text-xs text-black-600">141-143 Ilford Lane</p>
+          <h2 className="text-4xl font-bold">Style Mantra</h2>
+          <p className="text-xs text-black-600">109 Ilford Lane, Ilford, Essex IG12RJ</p>
           <p className="text-xs text-black-600">Tel: 0208-911-8010</p>
+          <p className="text-xs text-black-600">Whatsapp: 07-4546-12345</p>
         </div>
 
         <div className="mb-3 text-xs">
@@ -85,6 +86,7 @@ const Receipt = ({ saleData }) => {
             <span>Total Discount:</span>
             <span>£{saleData.overallDiscount.toFixed(2)}</span>
           </div>
+          <hr />
           <div className="flex justify-between font-bold border-t pt-1">
             <span>Amount to Pay:</span>
             <span>£{saleData.customerBillPrice.toFixed(2)}</span>
