@@ -48,7 +48,6 @@ const PaymentSummary = () => {
 
     dispatch(processSale(apiPayload))
       .then((response) => {
-
         const receiptData = {
           ...apiPayload,
           cart: cart.map((item) => ({
@@ -101,7 +100,7 @@ const PaymentSummary = () => {
                 type="number"
                 value={discountedBill}
                 onChange={handleDiscountedBillChange}
-                className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-25 px-2 py-1 border-2 border-green-500 bg-green-100 text-black font-bold rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 

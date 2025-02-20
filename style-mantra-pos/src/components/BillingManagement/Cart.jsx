@@ -14,7 +14,7 @@ const Cart = () => {
   const itemDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
   const discountedBill = cart.reduce((sum, item) => sum + item.price, 0);
   const actualBill = cart.reduce((sum, item) => sum + item.total, 0);
-  
+
   useEffect(() => {
     dispatch(updatePaymentSummary(actualBill, itemDiscount, discountedBill));
   }, [cart, dispatch, actualBill, itemDiscount, discountedBill]);
@@ -80,7 +80,7 @@ const Cart = () => {
                     onChange={(e) =>
                       handlePriceChange(rowData, parseFloat(e.target.value))
                     }
-                    className="w-20 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-25 px-4 py-2 border border-blue-500 bg-red-200 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     min="0"
                   />
                 </td>
