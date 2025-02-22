@@ -41,11 +41,6 @@ const Dashboard = () => {
               title="Employee Management"
               color="yellow"
             />
-            <DashboardCard
-              to="/reports"
-              title="Reports Management"
-              color="purple"
-            />
           </>
         )}
         <DashboardCard to="/billing" title="Billing Management" color="teal" />
@@ -53,6 +48,8 @@ const Dashboard = () => {
     </>
   );
 };
+
+import PropTypes from "prop-types";
 
 const DashboardCard = ({ to, title, color }) => {
   return (
@@ -69,6 +66,11 @@ const DashboardCard = ({ to, title, color }) => {
       </Link>
     </div>
   );
+};
+DashboardCard.propTypes = {
+  to: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default Dashboard;

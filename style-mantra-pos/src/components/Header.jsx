@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
+import { Link } from "react-router-dom";
+import { SALES_DASHBOARD_URL } from "../constants";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,7 +14,27 @@ const Header = () => {
   return (
     <header className="bg-gray-800 text-white p-4 shadow-md flex justify-between items-center">
       <div>
-        <h1 className="text-2xl font-bold">POS Dashboard</h1>
+        <h1 className="text-2xl font-bold">
+          POS Dashboard
+          {userRole === "admin" && (
+            <>
+              {" | "}
+              <Link
+                to={SALES_DASHBOARD_URL}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    SALES_DASHBOARD_URL,
+                    "_blank",
+                    "noopener,noreferrer"
+                  );
+                }}
+              >
+                <span>Sales Dashboard</span>
+              </Link>
+            </>
+          )}
+        </h1>
         <p className="text-lg font-semibold text-white-400 mt-1">
           Role: <span className="uppercase">{userRole || "User"}</span>
         </p>
