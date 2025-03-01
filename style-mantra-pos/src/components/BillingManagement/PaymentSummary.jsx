@@ -18,7 +18,7 @@ const PaymentSummary = () => {
 
   const cart = useSelector((state) => state.billing.cart);
 
-  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [paymentMethod, setPaymentMethod] = useState("Card");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [saleData, setSaleData] = useState(null);
 
