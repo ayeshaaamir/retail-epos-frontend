@@ -80,7 +80,7 @@ const Cart = () => {
                     onChange={(e) =>
                       handlePriceChange(rowData, parseFloat(e.target.value))
                     }
-                    className="w-20 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-24 px-4 py-2 bg-red-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     min="0"
                   />
                 </td>
