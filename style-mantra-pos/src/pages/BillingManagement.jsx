@@ -9,12 +9,12 @@ const BillingManagement = () => {
     <Provider store={store}>
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Billing Management</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="col-span-2">
             <BarcodeInput />
             <Cart />
           </div>
-          <div>
+          <div className="col-span-1">
             <PaymentSummary />
           </div>
         </div>

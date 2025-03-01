@@ -28,25 +28,39 @@ export const fetchInventory = () => async (dispatch) => {
 
 export const addInventory = (inventoryData) => async (dispatch) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/inventory`, {
-      items: [inventoryData],
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/inventory`,
+      inventoryData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     dispatch({ type: ADD_INVENTORY, payload: response.data });
     return response.data;
   } catch (error) {
     console.error("Error adding inventory:", error);
+    throw error;
   }
 };
 
 export const updateInventory = (inventoryData) => async (dispatch) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/inventory`, {
-      items: [inventoryData],
-    });
+    const response = await axios.post(
+      `${API_BASE_URL}/inventory`,
+      inventoryData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     dispatch({ type: UPDATE_INVENTORY, payload: response.data });
     return response.data;
   } catch (error) {
     console.error("Error updating inventory:", error);
+    throw error;
   }
 };
 

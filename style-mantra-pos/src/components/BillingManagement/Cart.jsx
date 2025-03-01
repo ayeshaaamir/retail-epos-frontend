@@ -4,17 +4,19 @@ import {
   removeFromCart,
   updatePaymentSummary,
 } from "../../redux/actions/billingActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.billing);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const totalItems = cart.length;
   const itemDiscount = cart.reduce((sum, item) => sum + item.item_discount, 0);
   const discountedBill = cart.reduce((sum, item) => sum + item.price, 0);
   const actualBill = cart.reduce((sum, item) => sum + item.total, 0);
-  
+
   useEffect(() => {
     dispatch(updatePaymentSummary(actualBill, itemDiscount, discountedBill));
   }, [cart, dispatch, actualBill, itemDiscount, discountedBill]);
@@ -42,6 +44,16 @@ const Cart = () => {
     dispatch(removeFromCart(rowData.cartItemId));
   };
 
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
+
   return (
     <div className="bg-white p-8 rounded-lg shadow-xl space-y-8 overflow-hidden">
       <div className="flex justify-between items-center mb-6">
@@ -55,6 +67,7 @@ const Cart = () => {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200 text-gray-800 text-left">
             <tr>
+              <th className="px-4 py-3 text-sm font-medium">Image</th>
               <th className="px-4 py-3 text-sm font-medium">Item</th>
               <th className="px-4 py-3 text-sm font-medium">Size</th>
               <th className="px-4 py-3 text-sm font-medium">Quantity</th>
@@ -67,9 +80,19 @@ const Cart = () => {
           <tbody className="text-gray-700">
             {cart.map((rowData) => (
               <tr
-                key={rowData.cartItemId} // Use cartItemId as the key
+                key={rowData.cartItemId}
                 className="hover:bg-gray-100 transition duration-300"
               >
+                <td className="px-4 py-4">
+                  {rowData.image && (
+                    <img
+                      src={rowData.image}
+                      alt={rowData.item}
+                      className="w-16 h-16 object-cover rounded-md cursor-pointer"
+                      onClick={() => handleImageClick(rowData.image)}
+                    />
+                  )}
+                </td>
                 <td className="px-4 py-4 text-sm">{rowData.item}</td>
                 <td className="px-4 py-4 text-sm">{rowData.size}</td>
                 <td className="px-4 py-4 text-sm">{rowData.qty}</td>
@@ -80,7 +103,7 @@ const Cart = () => {
                     onChange={(e) =>
                       handlePriceChange(rowData, parseFloat(e.target.value))
                     }
-                    className="w-20 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-24 px-4 py-2 bg-red-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     min="0"
                   />
                 </td>
@@ -120,10 +143,31 @@ const Cart = () => {
         </div>
         <hr />
         <div className="flex justify-between">
-          <span>Dicounted Bill:</span>
+          <span>Discounted Bill:</span>
           <span>£{discountedBill.toFixed(2)}</span>
         </div>
       </div>
+
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={closeModal}
+        >
+          <div className="bg-white p-4 rounded-lg relative">
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-gray-700 hover:text-gray-900"
+            >
+              &times;
+            </button>
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="max-w-full max-h-[80vh] object-contain"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

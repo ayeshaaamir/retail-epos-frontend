@@ -16,11 +16,15 @@ const InventoryForm = ({
     stock: inventoryData.stock || 0,
     size: inventoryData.size || "",
     color: inventoryData.color || "",
+    image: inventoryData.image || null,
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formattedData = {
+
+    const formDataToSend = new FormData();
+
+    const itemData = {
       productid: formData.product_id,
       price: formData.price,
       stock: formData.stock,
@@ -28,7 +32,14 @@ const InventoryForm = ({
       color: formData.color,
       sku: formData.sku,
     };
-    onSubmit(formattedData);
+
+    formDataToSend.append("items", JSON.stringify([itemData]));
+
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
+    }
+
+    onSubmit(formDataToSend);
   };
 
   return (
@@ -36,6 +47,20 @@ const InventoryForm = ({
       onSubmit={handleSubmit}
       className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto space-y-4"
     >
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Image (Optional)
+        </label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) =>
+            setFormData({ ...formData, image: e.target.files[0] })
+          }
+          className="w-full p-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-300"
+        />
+      </div>
+
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Product

@@ -32,6 +32,7 @@ const BarcodeInput = () => {
           price: parseFloat(item.price),
           item_discount: 0,
           total: parseFloat(item.price),
+          image: item.image_url,
         })
       );
 

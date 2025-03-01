@@ -18,7 +18,7 @@ const PaymentSummary = () => {
 
   const cart = useSelector((state) => state.billing.cart);
 
-  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [paymentMethod, setPaymentMethod] = useState("Card");
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const [saleData, setSaleData] = useState(null);
 
@@ -101,7 +101,7 @@ const PaymentSummary = () => {
                 type="number"
                 value={discountedBill}
                 onChange={handleDiscountedBillChange}
-                className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-24 px-2 py-1 bg-green-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
